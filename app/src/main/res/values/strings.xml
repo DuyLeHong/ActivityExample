@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ActivityExample</string>
+    <string name="txt_chaomungban">Chao mung ban,</string>
+    <string name="txt_dangkytaikhoan">Dang ky tai khoan</string>
+    <string name="txt_nhapusername">Nhap username</string>
+    <string name="txt_nhappassword">Nhap password</string>
+    <string name="txt_nhaplaipassword">Nhap lai password</string>
+    <string name="txt_dangnhaptieptuc">Vui long dang nhap</string>
+</resources>
