@@ -1,5 +1,9 @@
 package com.duyle.activityexample;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +17,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     public static String KEY_USERNAME = "user_name";
     public static String KEY_PASSWORD = "password";
+
+    ActivityResultLauncher<Intent> getData = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent intent = result.getData();
+                        String sThongBao = intent.getStringExtra(LoginActivity.KEY_THONGBAO);
+
+                        Toast.makeText(RegisterActivity.this, sThongBao, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +63,20 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 
-                    intent.putExtra(KEY_USERNAME, sUserName);
-                    intent.putExtra(KEY_PASSWORD, sPassword);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(KEY_USERNAME, sUserName);
+                    bundle.putString(KEY_PASSWORD, sPassword);
+                    bundle.putInt("number", 18);
 
-                    intent.putExtra("number", 18);
+//                    intent.putExtra(KEY_USERNAME, sUserName);
+//                    intent.putExtra(KEY_PASSWORD, sPassword);
 
-                    startActivity(intent);
+                    //intent.putExtra("number", 18);
+
+                    intent.putExtras(bundle);
+
+                    getData.launch(intent);
+                    //startActivity(intent);
                 }
 
             }
